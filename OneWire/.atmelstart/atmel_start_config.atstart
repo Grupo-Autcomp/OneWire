@@ -26,12 +26,12 @@ drivers:
     functionality: System
     api: Drivers:CLKCTRL:Init
     configuration:
-      $input: 8000000
+      $input: 24000000
       $input_id: Internal high-frequency oscillator
-      RESERVED_InputFreq: 8000000
+      RESERVED_InputFreq: 24000000
       RESERVED_InputFreq_id: Internal high-frequency oscillator
       _$freq_output_32kHz divided by 32: 1024
-      _$freq_output_External clock: '8000000'
+      _$freq_output_External clock: 8000000
       _$freq_output_Internal high-frequency oscillator: 24000000
       _$freq_output_Main Clock (CLK_MAIN): 24000000
       _$freq_output_PLL: 24000000
@@ -116,7 +116,7 @@ drivers:
     api: Drivers:SPI:Basic
     configuration:
       spi_ctrla_clk2x: true
-      spi_ctrla_dord: false
+      spi_ctrla_dord: true
       spi_ctrla_enable: true
       spi_ctrla_master: true
       spi_ctrla_presc: System Clock / 16
@@ -125,7 +125,7 @@ drivers:
       spi_ctrlb_mode: SPI Mode 0
       spi_ctrlb_ssd: false
       spi_intctrl_dreie: false
-      spi_intctrl_ie: true
+      spi_intctrl_ie: false
       spi_intctrl_rxcie: false
       spi_intctrl_ssie: false
       spi_intctrl_txcie: false
@@ -180,6 +180,12 @@ pads:
     mode: Digital output
     user_label: PA6
     configuration: null
+  LED0:
+    name: PC6
+    definition: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::pad::PC6
+    mode: Digital output
+    user_label: LED0
+    configuration: null
   INPUT:
     name: PA2
     definition: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::pad::PA2
@@ -195,9 +201,14 @@ pads:
   PA4:
     name: PA4
     definition: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::pad::PA4
-    mode: Digital output
+    mode: Advanced
     user_label: PA4
-    configuration: null
+    configuration:
+      pad_dir: Out
+      pad_initial_level: Low
+      pad_invert: Inverted
+      pad_isc: Digital Input Buffer disabled
+      pad_pull_config: 'Off'
 toolchain_options:
 - definition:
     identifier: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::environment_definition::All:Microchip.Studio.xc8:7.0.0

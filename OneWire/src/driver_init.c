@@ -50,8 +50,6 @@ void SPI_0_initialization(void)
 	    // <PORT_PULL_UP"> Pull-up
 	    PORT_PULL_OFF);
 
-	// Set pin direction to output
-
 	PA4_set_level(
 	    // <y> Initial level
 	    // <id> pad_initial_level
@@ -59,7 +57,38 @@ void SPI_0_initialization(void)
 	    // <true"> High
 	    false);
 
-	PA4_set_dir(PORT_DIR_OUT);
+	PA4_set_dir(
+	    // <y> Pin direction
+	    // <id> pad_dir
+	    // <PORT_DIR_OFF"> Off
+	    // <PORT_DIR_IN"> In
+	    // <PORT_DIR_OUT"> Out
+	    PORT_DIR_OUT);
+
+	PA4_set_pull_mode(
+	    // <y> Pull configuration
+	    // <id> pad_pull_config
+	    // <PORT_PULL_OFF"> Off
+	    // <PORT_PULL_UP"> Pull-up
+	    PORT_PULL_OFF);
+
+	PA4_set_inverted(
+	    // <y> Invert I/O on pin
+	    // <id> pad_invert
+	    // <false"> Not inverted
+	    // <true"> Inverted
+	    true);
+
+	PA4_set_isc(
+	    // <y> Pin Input/Sense Configuration
+	    // <id> pad_isc
+	    // <PORT_ISC_INTDISABLE_gc"> Interrupt disabled but input buffer enabled
+	    // <PORT_ISC_BOTHEDGES_gc"> Sense Both Edges
+	    // <PORT_ISC_RISING_gc"> Sense Rising Edge
+	    // <PORT_ISC_FALLING_gc"> Sense Falling Edge
+	    // <PORT_ISC_INPUT_DISABLE_gc"> Digital Input Buffer disabled
+	    // <PORT_ISC_LEVEL_gc"> Sense low Level
+	    PORT_ISC_INPUT_DISABLE_gc);
 
 	// Set pin direction to output
 
@@ -106,6 +135,19 @@ void system_init()
 	    false);
 
 	OUTPUT_set_dir(PORT_DIR_OUT);
+
+	/* PORT setting on PC6 */
+
+	// Set pin direction to output
+
+	LED0_set_level(
+	    // <y> Initial level
+	    // <id> pad_initial_level
+	    // <false"> Low
+	    // <true"> High
+	    false);
+
+	LED0_set_dir(PORT_DIR_OUT);
 
 	CLKCTRL_init();
 

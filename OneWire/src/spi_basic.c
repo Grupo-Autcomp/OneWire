@@ -60,7 +60,7 @@ void SPI_0_init()
 {
 
 	SPI0.CTRLA = 1 << SPI_CLK2X_bp     /* Enable Double Speed: enabled */
-	             | 0 << SPI_DORD_bp    /* Data Order Setting: disabled */
+	             | 1 << SPI_DORD_bp    /* Data Order Setting: enabled */
 	             | 1 << SPI_ENABLE_bp  /* Enable Module: enabled */
 	             | 1 << SPI_MASTER_bp  /* SPI module in master mode */
 	             | SPI_PRESC_DIV16_gc; /* System Clock / 16 */
@@ -70,11 +70,11 @@ void SPI_0_init()
 	//		 | SPI_MODE_0_gc /* SPI Mode 0 */
 	//		 | 0 << SPI_SSD_bp; /* Slave Select Disable: disabled */
 
-	SPI0.INTCTRL = 0 << SPI_DREIE_bp    /* Data Register Empty Interrupt Enable: disabled */
-	               | 1 << SPI_IE_bp     /* Interrupt Enable: enabled */
-	               | 0 << SPI_RXCIE_bp  /* Receive Complete Interrupt Enable: disabled */
-	               | 0 << SPI_SSIE_bp   /* Slave Select Trigger Interrupt Enable: disabled */
-	               | 0 << SPI_TXCIE_bp; /* Transfer Complete Interrupt Enable: disabled */
+	// SPI0.INTCTRL = 0 << SPI_DREIE_bp /* Data Register Empty Interrupt Enable: disabled */
+	//		 | 0 << SPI_IE_bp /* Interrupt Enable: disabled */
+	//		 | 0 << SPI_RXCIE_bp /* Receive Complete Interrupt Enable: disabled */
+	//		 | 0 << SPI_SSIE_bp /* Slave Select Trigger Interrupt Enable: disabled */
+	//		 | 0 << SPI_TXCIE_bp; /* Transfer Complete Interrupt Enable: disabled */
 
 	SPI_0_desc.status = SPI_FREE;
 	SPI_0_desc.cb     = NULL;
