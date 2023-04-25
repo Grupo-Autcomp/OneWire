@@ -1,14 +1,10 @@
 #include <atmel_start.h>
+#include <stdlib.h.>
 
-typedef struct {
-	volatile uint8_t R_reg;
-	volatile uint8_t G_reg;
-	volatile uint8_t B_reg;
-} LED;
+//LEMBRAR DE ORDEM BGR
 
-LED LED_Display[1] = {
-	{ 0x55, 0x00, 0xFF }
-};
+uint32_t LED_Display [30][3];
+
 
 uint32_t convert8to32(uint8_t color){
 	uint8_t data;
@@ -31,23 +27,22 @@ int main(void)
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
 	/*############################################################################### onde fica o prototipo*/
-	uint32_t data_R;
-	uint32_t data_G;
-	uint32_t data_B;
+	uint8_t x = 0;
+	uint8_t y = 0;
 	
-	data_R = convert8to32(LED_Display->R_reg);
-	data_G = convert8to32(LED_Display->G_reg);
-	data_B = convert8to32(LED_Display->B_reg);
-	
-	
+	for (uint8_t i =0; i<=0x30;i++){
+		for(uint8_t j=0;j<=3;j++){
+			LED_Display[i][j]=rand() % 0xFF;
+			LED_Display[i][j]=convert8to32(LED_Display[i][j]);
+		}
+	}
 	/* Replace with your application code */
 	while (1) {
-		
-		SPI_0_write_block(data_R, 32);
-		SPI_0_write_block(data_G, 32);
-		SPI_0_write_block(data_B, 32);
+		for (uint8_t i = 0; i<=30;i++){
+			for (uint8_t j=0; j<=3;j++){
+				SPI_0_write_block(LED_Display[i][j]);
+			}
+		}
+
 	}
 }
-
-
-uint32_t convert8to32(uint8_t color);
