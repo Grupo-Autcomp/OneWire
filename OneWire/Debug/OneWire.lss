@@ -571,10 +571,10 @@ int main(void)
 0000044a <srand>:
  44a:	a0 e0       	ldi	r26, 0x00	; 0
  44c:	b0 e0       	ldi	r27, 0x00	; 0
- 44e:	80 93 00 40 	sts	0x4000, r24	; 0x804000 <__DATA_REGION_ORIGIN__>
- 452:	90 93 01 40 	sts	0x4001, r25	; 0x804001 <__DATA_REGION_ORIGIN__+0x1>
- 456:	a0 93 02 40 	sts	0x4002, r26	; 0x804002 <__DATA_REGION_ORIGIN__+0x2>
- 45a:	b0 93 03 40 	sts	0x4003, r27	; 0x804003 <__DATA_REGION_ORIGIN__+0x3>
+ 44e:	80 93 00 40 	sts	0x4000, r24	; 0x804000 <__data_start>
+ 452:	90 93 01 40 	sts	0x4001, r25	; 0x804001 <__data_start+0x1>
+ 456:	a0 93 02 40 	sts	0x4002, r26	; 0x804002 <__data_start+0x2>
+ 45a:	b0 93 03 40 	sts	0x4003, r27	; 0x804003 <__data_start+0x3>
  45e:	08 95       	ret
 
 00000460 <__divmodsi4>:

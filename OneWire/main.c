@@ -48,7 +48,7 @@ bool mensagem(uint32_t data){
 void random_matrix(){
 	//Esse codigo cria uma matrix aleatoria e ja converte para 32 bits
 	//Ele é void pois está alterando a variavel global
-	for (uint8_t i =0; i<=0x30;i++){
+	for (uint8_t i =0; i<=30;i++){
 		for(uint8_t j=0;j<=3;j++){
 			LED_Display[i][j]=rand() % 0xFF;
 			LED_Display[i][j]=convert8to32(LED_Display[i][j]);
