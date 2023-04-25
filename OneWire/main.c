@@ -22,6 +22,29 @@ uint32_t convert8to32(uint8_t color){
 	return data;
 }
 
+bool mensagem(uint32_t data){
+
+	uint8_t info1,info2,info3,info4;
+	
+	info1= (uint8_t) (0xFF & (data >> 24));
+	SPI0.DATA = info1;
+	while (SPI_0_status_busy() & SPI_0_status_done());
+	
+	info2= (uint8_t) (0xFF & (data >> 16));
+	SPI0.DATA = info2;
+	while (SPI_0_status_busy() & SPI_0_status_done());
+	
+	info3= (uint8_t) (0xFF & (data >> 8));
+	SPI0.DATA = info3;
+	while (SPI_0_status_busy() & SPI_0_status_done());
+	
+	info4= (uint8_t) (0xFF & data);
+	SPI0.DATA = info4;
+	while (SPI_0_status_busy() & SPI_0_status_done());
+	
+	return SPI_0_status_done();
+}
+
 void random_matrix(){
 	//Esse codigo cria uma matrix aleatoria e ja converte para 32 bits
 	//Ele é void pois está alterando a variavel global
@@ -38,7 +61,7 @@ void sending_matrix(){
 	//Este codigo envia a matrix que está declarada como global
 	for (uint8_t i = 0; i<=30;i++){
 		for (uint8_t j=0; j<=3;j++){
-			SPI_0_write_block(LED_Display[i][j],32);
+			mensagem(LED_Display[i][j]);
 		}
 	}
 
@@ -48,13 +71,15 @@ int main(void)
 {
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
-	/*############################################################################### onde fica o prototipo*/
+	SPI_0_init();
+	SPI_0_enable();
 	
 	random_matrix();
 	
 	/* Replace with your application code */
 	while (1) {
 		sending_matrix();
+		_delay_us(50);
 	}
 		
 }
