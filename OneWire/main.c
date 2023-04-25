@@ -22,27 +22,39 @@ uint32_t convert8to32(uint8_t color){
 	return data;
 }
 
-int main(void)
-{
-	/* Initializes MCU, drivers and middleware */
-	atmel_start_init();
-	/*############################################################################### onde fica o prototipo*/
-	uint8_t x = 0;
-	uint8_t y = 0;
-	
+void random_matrix(){
+	//Esse codigo cria uma matrix aleatoria e ja converte para 32 bits
+	//Ele é void pois está alterando a variavel global
 	for (uint8_t i =0; i<=0x30;i++){
 		for(uint8_t j=0;j<=3;j++){
 			LED_Display[i][j]=rand() % 0xFF;
 			LED_Display[i][j]=convert8to32(LED_Display[i][j]);
 		}
 	}
+	
+}
+
+void sending_matrix(){
+	//Este codigo envia a matrix que está declarada como global
+	for (uint8_t i = 0; i<=30;i++){
+		for (uint8_t j=0; j<=3;j++){
+			SPI_0_write_block(LED_Display[i][j],32);
+		}
+	}
+
+}
+
+int main(void)
+{
+	/* Initializes MCU, drivers and middleware */
+	atmel_start_init();
+	/*############################################################################### onde fica o prototipo*/
+	
+	random_matrix();
+	
 	/* Replace with your application code */
 	while (1) {
-		for (uint8_t i = 0; i<=30;i++){
-			for (uint8_t j=0; j<=3;j++){
-				SPI_0_write_block(LED_Display[i][j]);
-			}
-		}
-
+		sending_matrix();
 	}
+		
 }
