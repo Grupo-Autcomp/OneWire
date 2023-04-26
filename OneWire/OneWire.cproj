@@ -73,7 +73,7 @@
           <AcmeProjectActionInfo Action="File" Source="src/cpuint.c" IsConfig="false" Hash="8QNlbJZ6R6wBiCT5nh902g" />
           <AcmeProjectActionInfo Action="File" Source="src/protected_io.S" IsConfig="false" Hash="sgFkmFP7h1y8L07bVZahaQ" />
           <AcmeProjectActionInfo Action="File" Source="src/slpctrl.c" IsConfig="false" Hash="QkIqUubBLg6fH7ESMxxauQ" />
-          <AcmeProjectActionInfo Action="File" Source="src/spi_basic.c" IsConfig="false" Hash="9FjsI+4qkcQ+QEt50My+6w" />
+          <AcmeProjectActionInfo Action="File" Source="src/spi_basic.c" IsConfig="false" Hash="Uxg7LsYdlsMNkqN/RfxSVw" />
           <AcmeProjectActionInfo Action="File" Source="utils/assembler.h" IsConfig="false" Hash="jaaWqpCXnRJMciuXpjSfgQ" />
           <AcmeProjectActionInfo Action="File" Source="utils/assembler/gas.h" IsConfig="false" Hash="wV+34zXWOOJ7jfwQibBgLQ" />
           <AcmeProjectActionInfo Action="File" Source="utils/assembler/iar.h" IsConfig="false" Hash="re7qP3QC0FK72z2UZ4UoFg" />

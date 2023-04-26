@@ -70,11 +70,11 @@ void SPI_0_init()
 	//		 | SPI_MODE_0_gc /* SPI Mode 0 */
 	//		 | 0 << SPI_SSD_bp; /* Slave Select Disable: disabled */
 
-	// SPI0.INTCTRL = 0 << SPI_DREIE_bp /* Data Register Empty Interrupt Enable: disabled */
-	//		 | 0 << SPI_IE_bp /* Interrupt Enable: disabled */
-	//		 | 0 << SPI_RXCIE_bp /* Receive Complete Interrupt Enable: disabled */
-	//		 | 0 << SPI_SSIE_bp /* Slave Select Trigger Interrupt Enable: disabled */
-	//		 | 0 << SPI_TXCIE_bp; /* Transfer Complete Interrupt Enable: disabled */
+	SPI0.INTCTRL = 0 << SPI_DREIE_bp    /* Data Register Empty Interrupt Enable: disabled */
+	               | 1 << SPI_IE_bp     /* Interrupt Enable: enabled */
+	               | 0 << SPI_RXCIE_bp  /* Receive Complete Interrupt Enable: disabled */
+	               | 0 << SPI_SSIE_bp   /* Slave Select Trigger Interrupt Enable: disabled */
+	               | 0 << SPI_TXCIE_bp; /* Transfer Complete Interrupt Enable: disabled */
 
 	SPI_0_desc.status = SPI_FREE;
 	SPI_0_desc.cb     = NULL;

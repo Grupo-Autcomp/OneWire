@@ -125,7 +125,7 @@ drivers:
       spi_ctrlb_mode: SPI Mode 0
       spi_ctrlb_ssd: false
       spi_intctrl_dreie: false
-      spi_intctrl_ie: false
+      spi_intctrl_ie: true
       spi_intctrl_rxcie: false
       spi_intctrl_ssie: false
       spi_intctrl_txcie: false
@@ -218,14 +218,14 @@ toolchain_options:
     linker_config:
       xc8_linker_miscellaneous_LinkerFlags: ''
 - definition:
-    identifier: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::environment_definition::All:Microchip.Studio.gcc:7.0.0
+    identifier: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::environment_definition::All:Atmel.Studio:7.0.0
   configuration:
     compiler_config:
       avrgcc_compiler_miscellaneous_OtherFlags: -std=gnu99
     linker_config:
       avrgcc_linker_miscellaneous_LinkerFlags: ''
 - definition:
-    identifier: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::environment_definition::All:Atmel.Studio:7.0.0
+    identifier: Atmel:AVRMEGA_drivers:1.0.0::AVR128DA48::environment_definition::All:Microchip.Studio.gcc:7.0.0
   configuration:
     compiler_config:
       avrgcc_compiler_miscellaneous_OtherFlags: -std=gnu99

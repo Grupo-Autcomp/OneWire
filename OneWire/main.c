@@ -1,47 +1,48 @@
 #include <atmel_start.h>
 #include <util/delay.h>
+#define N 30
 
 typedef struct {
-	volatile uint8_t R_reg;
-	volatile uint8_t G_reg;
-	volatile uint8_t B_reg;
+	uint32_t R_reg;
+	uint32_t G_reg;
+	uint32_t B_reg;
 } LED;
 
-volatile LED LED_Display[1] = {
-	{0x00, 0x00, 0xFF}
-};
-
+volatile LED LED_Display[N];
+volatile uint32_t RED[N];
+volatile uint32_t GRE[N];
+volatile uint32_t BLU[N];
 uint32_t convert8to32(uint8_t color);
-bool mensagem(uint32_t data);
+void mensagem(uint32_t red, uint32_t gre, uint32_t blu);
+void fill_matrix(LED matrix[N]);
 
-volatile uint32_t data_R;
-volatile uint32_t data_G;
-volatile uint32_t data_B;
 
 int main(void)
-{
+{		
 	/* Initializes MCU, drivers and middleware */
 	atmel_start_init();
 	
 	SPI_0_init();
 	SPI_0_enable();
 
+	fill_matrix(LED_Display);
 	
-	data_R = convert8to32(LED_Display->R_reg);
-	data_G = convert8to32(LED_Display->G_reg);
-	data_B = convert8to32(LED_Display->B_reg);
+	for (uint8_t i=0; i<30; i++)
+	{
+		RED[i] = convert8to32(LED_Display[i].R_reg);
+		GRE[i] = convert8to32(LED_Display[i].G_reg);
+		BLU[i] = convert8to32(LED_Display[i].B_reg);
+	}
 	
 	/* Replace with your application code */
 	while (1) {
-		for (uint8_t i=0; i<=30; i++)
-		{
-			mensagem(data_R);
-			mensagem(data_G);
-			mensagem(data_B);
+		for (uint8_t i=0; i<N; i++)
+		{	
+			mensagem(RED[i], BLU[i], GRE[i]);
 		}
 		
 		//LED0_toggle_level();
-		_delay_us(50);
+		_delay_us(100);
 		
 	}
 }
@@ -64,28 +65,78 @@ uint32_t convert8to32(uint8_t color){
 	return data;
 }
 
-bool mensagem(uint32_t data){
+void mensagem(uint32_t red, uint32_t gre, uint32_t blu){
 
-	uint8_t info1;
-	uint8_t info2;
-	uint8_t info3;
-	uint8_t info4;
+	uint8_t info_r1;
+	uint8_t info_r2;
+	uint8_t info_r3;
+	uint8_t info_r4;
 	
-	info1= (uint8_t) (0xFF & (data >> 24));
-	SPI0.DATA = info1;
-	while (SPI_0_status_busy() & SPI_0_status_done());
+	uint8_t info_g1;
+	uint8_t info_g2;
+	uint8_t info_g3;
+	uint8_t info_g4;
 	
-	info2= (uint8_t) (0xFF & (data >> 16));
-	SPI0.DATA = info2;
-	while (SPI_0_status_busy() & SPI_0_status_done());
+	uint8_t info_b1;
+	uint8_t info_b2;
+	uint8_t info_b3;
+	uint8_t info_b4;
 	
-	info3= (uint8_t) (0xFF & (data >> 8));
-	SPI0.DATA = info3;
-	while (SPI_0_status_busy() & SPI_0_status_done());
+	info_r1 = (uint8_t) (0xFF & (red >> 24));	
+	info_r2 = (uint8_t) (0xFF & (red >> 16));	
+	info_r3= (uint8_t) (0xFF & (red >> 8));	
+	info_r4= (uint8_t) (0xFF & red);
 	
-	info4= (uint8_t) (0xFF & data);
-	SPI0.DATA = info4;
-	while (SPI_0_status_busy() & SPI_0_status_done());
+	info_g1 = (uint8_t) (0xFF & (gre >> 24));
+	info_g2 = (uint8_t) (0xFF & (gre >> 16));
+	info_g3= (uint8_t) (0xFF & (gre >> 8));
+	info_g4= (uint8_t) (0xFF & gre);
 	
-	return SPI_0_status_done();
+	info_b1 = (uint8_t) (0xFF & (blu >> 24));
+	info_b2 = (uint8_t) (0xFF & (blu >> 16));
+	info_b3= (uint8_t) (0xFF & (blu >> 8));
+	info_b4= (uint8_t) (0xFF & blu);
+	
+	SPI0.DATA = info_r1;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_r2;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_r3;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_r4;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	
+	SPI0.DATA = info_g1;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_g2;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_g3;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_g4;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	
+	SPI0.DATA = info_b1;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_b2;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_b3;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+	SPI0.DATA = info_b4;
+	while (!(SPI0.INTFLAGS & SPI_IF_bm));
+}
+
+void fill_matrix(LED matrix[N]){
+	uint8_t R;
+	uint8_t G;
+	uint8_t B;
+	
+	for(uint8_t i=0; i<N; i++){
+		R = rand()%0xFF;
+		G = rand()%0xFF;
+		B = rand()%0xFF;
+		
+		matrix[i].R_reg = convert8to32(R);
+		matrix[i].G_reg = convert8to32(G);
+		matrix[i].B_reg = convert8to32(B);
+	}
 }
